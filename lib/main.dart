@@ -54,7 +54,6 @@ class _MyHomePageState extends State<MyHomePage> {
           onSendPressed: _handleSendPressed,
           user: _user,
           bubbleBuilder: _bubbleBuilder,
-          textMessageBuilder: _textMessageBuilder,
         ),
       );
 
@@ -227,53 +226,29 @@ class _MyHomePageState extends State<MyHomePage> {
     required message,
     required nextMessageInGroup,
   }) =>
-    Bubble(
-      color: _user.id != message.author.id ||
-              message.type == types.MessageType.image
-          ? const Color(0xfff5f5f7)
-          : const Color(0xffcce9fe),
-      margin: nextMessageInGroup
-          ? const BubbleEdges.symmetric(horizontal: 6)
-          : null,
-      nip: nextMessageInGroup
-          ? BubbleNip.no
-          : _user.id != message.author.id
-              ? BubbleNip.leftBottom
-              : BubbleNip.rightBottom,
-      child: Text(message.text),
-
-    );
-
-  Widget _textMessageBuilder(types.TextMessage text, {
-    required int messageWidth,
-    required bool showName,
-  }) => 
-    Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-      decoration: BoxDecoration(
-        color: Colors.blue[200],
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.end,
-        children: <Widget>[
-          Text(
-            text.text
-          ),
-          Text(
-            DateFormat('hh:mm').format(
-              DateTime.fromMillisecondsSinceEpoch(
-                text.createdAt!),
-            ),
-            style: TextStyle(
-              color: Colors.black.withOpacity(0.6),
-              fontSize: 13.0,
-            ),
-          ),
-        ],
-      ),
+    Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(message.createdAt!)),
+          style: TextStyle(color: Colors.grey),
+        ),
+        Bubble(
+          color: _user.id != message.author.id ||
+                  message.type == types.MessageType.image
+              ? const Color(0xfff5f5f7)
+              : const Color(0xffcce9fe),
+          margin: nextMessageInGroup
+              ? const BubbleEdges.symmetric(horizontal: 6)
+              : null,
+          nip: nextMessageInGroup
+              ? BubbleNip.no
+              : _user.id != message.author.id
+                  ? BubbleNip.leftBottom
+                  : BubbleNip.rightBottom,
+          child: Text(message.text),
+        ),
+      ],
     );
 }
 
