@@ -1,16 +1,15 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/chatInputField.dart';
 import 'package:flutter_chat/message.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -56,6 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
           user: _user,
           bubbleBuilder: _bubbleBuilder,
           customDateHeaderText: customDateHeaderText,
+          customBottomWidget: ChatInputField(
+            handleSendPressed: _handleSendPressed,
+          ),
         ),
       );
 
@@ -222,6 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     _addMessage(textMessage);
   }
+
 
   Widget _bubbleBuilder(
     Widget child, {
