@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:bubble/bubble.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/message.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:http/http.dart' as http;
@@ -54,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onSendPressed: _handleSendPressed,
           user: _user,
           bubbleBuilder: _bubbleBuilder,
+          customDateHeaderText: customDateHeaderText,
         ),
       );
 
@@ -229,26 +231,59 @@ class _MyHomePageState extends State<MyHomePage> {
     Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(message.createdAt!)),
-          style: TextStyle(color: Colors.grey),
-        ),
-        Bubble(
-          color: _user.id != message.author.id ||
-                  message.type == types.MessageType.image
-              ? const Color(0xfff5f5f7)
-              : const Color(0xffcce9fe),
-          margin: nextMessageInGroup
-              ? const BubbleEdges.symmetric(horizontal: 6)
-              : null,
-          nip: nextMessageInGroup
-              ? BubbleNip.no
-              : _user.id != message.author.id
-                  ? BubbleNip.leftBottom
-                  : BubbleNip.rightBottom,
-          child: Text(message.text),
+        MessageWidget(
+          message: message,
+          nextMessageInGroup: nextMessageInGroup,
+          user: _user,
         ),
       ],
     );
+}
+
+String customDateHeaderText(DateTime date) {
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final yesterday = DateTime(now.year, now.month, now.day - 1);
+  final messageDate = DateTime(date.year, date.month, date.day);
+
+  if (messageDate == today) {
+    return 'Hoje';
+  } else if (messageDate == yesterday) {
+    return 'Ontem';
+  } else if (now.difference(messageDate).inDays < 365) {
+    return '${messageDate.day} de ${monthParserText(messageDate.month)}';
+  } else {
+    return '${messageDate.day} de ${monthParserText(messageDate.month)} de ${messageDate.year}';}
+}
+
+String monthParserText(int month) {
+  switch (month) {
+    case 1:
+      return 'janeiro';
+    case 2:
+      return 'fevereiro';
+    case 3:
+      return 'março';
+    case 4:
+      return 'abril';
+    case 5:
+      return 'maio';
+    case 6:
+      return 'junho';
+    case 7:
+      return 'julho';
+    case 8:
+      return 'agosto';
+    case 9:
+      return 'setembro';
+    case 10:
+      return 'outubro';
+    case 11:
+      return 'novembro';
+    case 12:
+      return 'dezembro';
+    default:
+      return '';
+  }
 }
 
