@@ -46,6 +46,39 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+            leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+                Row(
+                  children: [
+                    Text(
+                      'Rota 2554223',
+                      style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 5.0),
+                    Icon(Icons.circle, color: Color(0xFF909090), size: 10.0),
+                    SizedBox(width: 5.0),
+                    Text(
+                      'Pedido #2515223',
+                      style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
+                    )
+                  ]
+                ),
+              Text(
+                'Nome abaixo',
+                style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
+              ),
+            ],
+          ),
+        ),
         body: Chat(
           messages: _messages,
           onAttachmentPressed: _handleAttachmentPressed,
