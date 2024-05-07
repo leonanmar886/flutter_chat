@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
             leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18.0,),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -79,17 +79,50 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-        body: Chat(
-          messages: _messages,
-          onAttachmentPressed: _handleAttachmentPressed,
-          onMessageTap: _handleMessageTap,
-          onPreviewDataFetched: _handlePreviewDataFetched,
-          onSendPressed: _handleSendPressed,
-          user: _user,
-          bubbleBuilder: _bubbleBuilder,
-          customDateHeaderText: customDateHeaderText,
-          customBottomWidget: ChatInputField(
-            handleSendPressed: _handleSendPressed,
+        body:Container(
+          color: const Color(0xFFF7F7F7),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 15.0, bottom: 10.0, left: 20.0, right: 15.0),
+                width: 325,
+                child: RichText(
+                  text: const TextSpan(
+                    style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400, color: Color(0xFF6B6B6B), fontStyle: FontStyle.italic),
+                    children: <TextSpan>[
+                      TextSpan(text: 'Aberturas de chamados podem levar '),
+                      TextSpan(
+                        text: 'até 24h',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Color(0xFF464646),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(text: ' para serem respondidos'),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Chat(
+                  messages: _messages,
+                  onAttachmentPressed: _handleAttachmentPressed,
+                  onMessageTap: _handleMessageTap,
+                  onPreviewDataFetched: _handlePreviewDataFetched,
+                  onSendPressed: _handleSendPressed,
+                  user: _user,
+                  bubbleBuilder: _bubbleBuilder,
+                  customDateHeaderText: customDateHeaderText,
+                  customBottomWidget: ChatInputField(
+                    handleSendPressed: _handleSendPressed,
+                  ),
+                  theme: const DefaultChatTheme(
+                    backgroundColor: Color(0xFFF7F7F7),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       );

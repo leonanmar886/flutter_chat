@@ -53,9 +53,9 @@ class ChatInputField extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(
-                Icons.play_arrow_outlined,
+                IconData(0xe800, fontFamily: 'MyFlutterApp'),
                 color: Colors.blueAccent,
-                size: 40.0,
+                size: 25.0,
               ),
             onPressed: () {
               final partialText = types.PartialText(text: _controller.text);
