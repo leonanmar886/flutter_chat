@@ -4,10 +4,14 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 class ChatInputField extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
   final void Function(types.PartialText) handleSendPressed;
+  final void Function() handleFileSelection;
+  final void Function() handleCameraSelection;
 
   ChatInputField({
     super.key,
     required this.handleSendPressed,
+    required this.handleFileSelection,
+    required this.handleCameraSelection,
   });
 
   @override
@@ -33,7 +37,7 @@ class ChatInputField extends StatelessWidget {
                           color: Colors.blueAccent
                         ),
                       onPressed: () {
-                        // Handle add icon press
+                        handleFileSelection();
                       },
                     ),
                     IconButton(
@@ -42,7 +46,7 @@ class ChatInputField extends StatelessWidget {
                           color: Colors.blueAccent,
                         ),
                       onPressed: () {
-                        // Handle add icon press
+                        handleCameraSelection();
                       },
                     ),
                   ],

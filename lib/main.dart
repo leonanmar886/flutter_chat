@@ -116,6 +116,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   customDateHeaderText: customDateHeaderText,
                   customBottomWidget: ChatInputField(
                     handleSendPressed: _handleSendPressed,
+                    handleFileSelection: () {
+                      if (Navigator.canPop(context)) {
+                        Navigator.pop(context);
+                      }
+                      _handleFileSelection();
+                    },
+                    handleCameraSelection: () {
+                      if (Navigator.canPop(context)) {
+                        Navigator.pop(context);
+                      }
+                      _handleImageSelection();
+                    },
                   ),
                   theme: const DefaultChatTheme(
                     backgroundColor: Color(0xFFF7F7F7),
@@ -176,50 +188,50 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _handleFileSelection() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.any,
+void _handleFileSelection() async {
+  final result = await FilePicker.platform.pickFiles(
+    type: FileType.any,
+  );
+
+  if (result != null && result.files.single.path != null && mounted) {
+    final message = types.FileMessage(
+      author: _user,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      id: randomString(),
+      name: result.files.single.name,
+      size: result.files.single.size,
+      uri: result.files.single.path!,
     );
 
-    if (result != null && result.files.single.path != null) {
-      final message = types.FileMessage(
-        author: _user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        id: randomString(),
-        name: result.files.single.name,
-        size: result.files.single.size,
-        uri: result.files.single.path!,
-      );
-
-      _addMessage(message);
-    }
+    _addMessage(message);
   }
+}
 
-  void _handleImageSelection() async {
-    final result = await ImagePicker().pickImage(
-      imageQuality: 70,
-      maxWidth: 1440,
-      source: ImageSource.gallery,
+void _handleImageSelection() async {
+  final result = await ImagePicker().pickImage(
+    imageQuality: 70,
+    maxWidth: 1440,
+    source: ImageSource.gallery,
+  );
+
+  if (result != null && mounted) {
+    final bytes = await result.readAsBytes();
+    final image = await decodeImageFromList(bytes);
+
+    final message = types.ImageMessage(
+      author: _user,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      height: image.height.toDouble(),
+      id: randomString(),
+      name: result.name,
+      size: bytes.length,
+      uri: result.path,
+      width: image.width.toDouble(),
     );
 
-    if (result != null) {
-      final bytes = await result.readAsBytes();
-      final image = await decodeImageFromList(bytes);
-
-      final message = types.ImageMessage(
-        author: _user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        height: image.height.toDouble(),
-        id: randomString(),
-        name: result.name,
-        size: bytes.length,
-        uri: result.path,
-        width: image.width.toDouble(),
-      );
-
-      _addMessage(message);
-    }
+    _addMessage(message);
   }
+}
 
   void _handleMessageTap(BuildContext _, types.Message message) async {
     if (message is types.FileMessage) {
@@ -304,6 +316,7 @@ class _MyHomePageState extends State<MyHomePage> {
           message: message,
           nextMessageInGroup: nextMessageInGroup,
           user: _user,
+          child: child,
         ),
       ],
     );
