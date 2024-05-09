@@ -27,6 +27,13 @@ class ChatInputField extends StatelessWidget {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black45,
+                    width: 2.0,
+                  ),
+                ),
                 contentPadding: const EdgeInsets.all(10.0),
                 suffixIcon: Row(
                   mainAxisSize: MainAxisSize.min, // Adicione esta linha
@@ -34,7 +41,7 @@ class ChatInputField extends StatelessWidget {
                     IconButton(
                       icon: const Icon(
                           Icons.file_present_outlined, 
-                          color: Colors.blueAccent
+                          color: Color(0xFF0291FB)
                         ),
                       onPressed: () {
                         handleFileSelection();
@@ -43,7 +50,7 @@ class ChatInputField extends StatelessWidget {
                     IconButton(
                       icon: const Icon(
                           Icons.camera_alt_outlined,
-                          color: Colors.blueAccent,
+                          color: Color(0xFF0291FB),
                         ),
                       onPressed: () {
                         handleCameraSelection();
@@ -58,7 +65,7 @@ class ChatInputField extends StatelessWidget {
           IconButton(
             icon: const Icon(
                 IconData(0xe800, fontFamily: 'MyFlutterApp'),
-                color: Colors.blueAccent,
+                color: Color(0xFF0291FB),
                 size: 25.0,
               ),
             onPressed: () {
