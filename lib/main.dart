@@ -114,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   user: _user,
                   bubbleBuilder: _bubbleBuilder,
                   customDateHeaderText: customDateHeaderText,
+                  emptyState: Container(),
                   customBottomWidget: ChatInputField(
                     handleSendPressed: _handleSendPressed,
                     handleFileSelection: () {
