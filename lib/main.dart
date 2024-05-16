@@ -64,9 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       'Rota 2554223',
                       style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(width: 5.0),
-                    Icon(Icons.circle, color: Color(0xFF909090), size: 10.0),
-                    SizedBox(width: 5.0),
+                    SizedBox(width: 6.0),
+                    Icon(Icons.circle, color: Color(0xFF909090), size: 5.0),
+                    SizedBox(width: 6.0),
                     Text(
                       'Pedido #2515223',
                       style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),

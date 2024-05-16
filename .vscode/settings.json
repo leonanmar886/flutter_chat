@@ -1,0 +1,9 @@
+{
+    "dart.checkForSdkUpdates": true,
+    "dart.flutterSdkPaths": [
+        "C:\\src\\flutter",
+        "C:\\src\\flutter_windows_3.7.1-stable\\flutter"
+    ],
+    "dart.flutterSdkPath": "C:\\src\\flutter",
+    "cmake.configureOnOpen": false
+}

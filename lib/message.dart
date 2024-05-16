@@ -1,5 +1,6 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/custom_bubble.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class MessageWidget extends StatelessWidget {
@@ -23,19 +24,31 @@ class MessageWidget extends StatelessWidget {
       children: [
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 200),
-          child: Bubble(
+          child: CustomBubble(
             color: user.id != message.author.id ? const Color(0xffECECEC) : const Color(0xffcce9fe),
-            margin: nextMessageInGroup
-                ? const BubbleEdges.symmetric(horizontal: 6)
-                : null,
-            nip: nextMessageInGroup
-                ? BubbleNip.no
-                : user.id != message.author.id ? BubbleNip.leftBottom : BubbleNip.rightBottom,
-            child: message.type == types.MessageType.text
-                ? Text(message.text)
-                : SingleChildScrollView(
-                    child: child,
-                  ),
+            borderRadius: user.id != message.author.id
+            ? const BorderRadius.only(
+            topRight: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+            bottomLeft: Radius.circular(20)
+            )
+            : const BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+            bottomLeft: Radius.circular(20)
+            ),
+            child: Bubble(
+              color: user.id != message.author.id ? const Color(0xffECECEC) : const Color(0xffcce9fe),
+              margin: nextMessageInGroup
+                  ? const BubbleEdges.symmetric(horizontal: 6)
+                  : null,
+              shadowColor: Colors.transparent,
+              child: message.type == types.MessageType.text
+                  ? Text(message.text)
+                  : SingleChildScrollView(
+                      child: child,
+                    ),
+            ),
           ),
         ),
       ]
